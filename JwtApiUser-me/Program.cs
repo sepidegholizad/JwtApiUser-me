@@ -1,4 +1,6 @@
+using JwtApiUser_me.Infrastructure;
 using JwtApiUser_me.Servicse;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -8,7 +10,9 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<JwtApiDbContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("backDB"))
+);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
